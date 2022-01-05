@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "api server for webplayer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Marcin Knapczyk",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "formidable": "^1.2.2",
+    "nedb": "^1.8.0"
+  }
+}

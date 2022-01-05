@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="dropbox">
+        <h1 id="header">Upuść pliki tutaj</h1>
+        <p id="filelist"></p>
+    </div>
+    <script>
+        document.querySelector("#dropbox").ondragenter = function (e) {
+            document.getElementById("header").innerText = "Upuść";
+            console.log("drag enter na divie")
+            e.stopPropagation();
+            e.preventDefault();
+        }
+
+
+        document.querySelector("#dropbox").ondragover = function (e) {
+            console.log("drag over na divie")
+            e.stopPropagation();
+            e.preventDefault();
+        }
+
+        document.querySelector("#dropbox").ondragleave = function (e) {
+            document.getElementById("header").innerText = "Upuść pliki tutaj";
+            console.log("dragleave na divie")
+            e.stopPropagation();
+            e.preventDefault();
+
+        }
+
+        document.querySelector("#dropbox").ondrop = function (e) {
+            document.getElementById("header").innerText = "Przesłano:";
+            let filelist = document.getElementById("filelist");
+            filelist.innerHTML = "";
+            console.log("drop na divie")
+            e.stopPropagation();
+            e.preventDefault();
+
+            var files = Array.from(e.dataTransfer.files);
+            console.log(files)
+
+            var fd = new FormData()
+
+            files.forEach(file => {
+                if (file.type == "image/jpeg" || file.type == "image/png") {
+                    filelist.innerHTML += `${file.name} <br>`
+                    fd.append('cover', file)
+                }
+                else if (file.type == 'audio/mpeg') {
+                    filelist.innerHTML += `${file.name} <br>`
+                    fd.append('mp3', file)
+                }
+            })
+            console.log(fd)
+            const body = fd
+
+            fetch("/fileupload", { method: "post", body })
+                .then(response => response.json())
+                .then(data => console.log(data)) // odesłane z serwera dane
+                .catch(error => console.log(error)) // ew błąd
+        }
+    </script>
+    <style>
+        #dropbox {
+            background: violet;
+        }
+    </style>
+</body>
+
+</html>
