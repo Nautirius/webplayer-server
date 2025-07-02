@@ -1,1 +1,2 @@
-# Webplayer App project developed for Web Applications classes in technical school
+# Vue + Node Webplayer App 
+Project developed for Web Applications classes in technical school
